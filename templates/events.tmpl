@@ -7,20 +7,24 @@
 {{ define "content" }}
   <section id="events">
     <h1>Events</h1>
-    <ul>
-      {{ range . }}
-        {{ if .Upcoming }}<li class="upcoming">{{ else }}<li>{{ end }}
-          <a class="event" href="{{ .URL }}">
-            <img src="{{ .ImageURL }}">
-              <div class="description">
-                <h2>{{ .Name }}</h2>
-                <p class="location">{{ .Location }}</p>
-                <p class="date">{{ .Date }}</p>
-              </div>
-            </img>
-          </a>
-        </li>
-      {{ end }}
-    </ul>
+
+    <div class="event-group">
+      {{if .HaveOngoing}}
+        <h2>Ongoing Events</h2>
+        <hr/>
+        {{ template "event-list" .EventGroup.Ongoing }}
+      {{end}}
+
+      {{if .HaveUpcoming}}
+        <h2>Upcoming Events</h2>
+        <hr/>
+        {{ template "event-list" .EventGroup.Upcoming }}
+      {{end}}
+
+      <h2>Past Events</h2>
+      <hr/>
+      {{ template "event-list" .EventGroup.Past }}
+    </div>
   </section>
-{{ end }}
+
+{{end}}
